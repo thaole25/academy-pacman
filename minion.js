@@ -13,6 +13,11 @@ minion = {
 	y: 10
 }
 
+goal = {
+	x: 2,
+	y: 1
+}
+
 map = [ 
     [1,1,1,1,1,1,1,1,1,1,1,1], 
 	[1,3,4,3,3,3,2,3,3,3,2,1],  
@@ -56,6 +61,25 @@ function drawWorld(){
 
 drawWorld();
 
+let timer = document.getElementById('timer');
+let timeout;
+
+function done(){
+	clearTimeout(timeout);
+	timer.innerHTML = "DONE!";
+	document.onkeydown = null;
+}
+
+function countDown(seconds){
+	timer.innerHTML = "Count down: " + seconds;
+	seconds --;
+	timeout = setTimeout('countDown('+seconds+')',1000);
+	if (seconds < 0){
+		done();
+	}
+}
+countDown(30);
+
 document.onkeydown = function(event){
 	// console.log(event);
 	if (event.keyCode === 37){ // minion MOVE LEFT
@@ -89,20 +113,15 @@ document.onkeydown = function(event){
 			drawWorld();
 		}
 	}
-	console.log(map)
+	reachGoal();
+	console.log(reachGoal);
 }
 
-let timer = document.getElementById('timer');
-function countDown(seconds){
-	timer.innerHTML = "Count down: " + seconds;
-	seconds --;
-	let timeout = setTimeout('countDown('+seconds+')',1000);
-	if (seconds < 0){
-		clearTimeout(timeout);
-		timer.innerHTML = "Time out!";
+function reachGoal(){
+	if (minion.x == goal.x && minion.y == goal.y){
+		done();
 	}
 }
-countDown(30);
 
 function nextGame() {
 	location.replace('next.html');
