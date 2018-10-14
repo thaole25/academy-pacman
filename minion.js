@@ -71,7 +71,7 @@ function done(){
 }
 
 function countDown(seconds){
-	timer.innerHTML = "Count down: " + seconds;
+	timer.innerHTML = seconds;
 	seconds --;
 	timeout = setTimeout('countDown('+seconds+')',1000);
 	if (seconds < 0){

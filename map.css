@@ -1,0 +1,57 @@
+.wall {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/wall50.png');
+    display: inline-block;
+}
+.coin {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/coin50.png');
+    display: inline-block;
+}
+.banana {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/banana50.png');
+    display: inline-block;
+}
+.ground {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/bg50.png');
+    display: inline-block;
+}
+.minion {
+    width: 50px;
+    height: 50px;
+    background-image: url('img/minion50.png');
+    display: inline-block;
+}
+
+div {
+    line-height: 0px;
+}
+
+div.timer{
+    font-size: 30px;
+    position: absolute;
+    top: 38px;
+    left: 76px;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 26px;
+    margin: 4px 2px;
+    cursor: pointer;
+    position: absolute;
+    top: 38px;
+    right: 30px;
+}

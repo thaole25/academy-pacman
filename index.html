@@ -1,65 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Minion</title>	
-	<style>
-		.wall {
-			width: 50px;
-			height: 50px;
-			background-image: url('img/wall50.png');
-			display: inline-block;
-		}
-		.coin {
-			width: 50px;
-			height: 50px;
-			background-image: url('img/coin50.png');
-			display: inline-block;
-		}
-		.banana {
-			width: 50px;
-			height: 50px;
-			background-image: url('img/banana50.png');
-			display: inline-block;
-		}
-		.ground {
-			width: 50px;
-			height: 50px;
-			background-image: url('img/bg50.png');
-			display: inline-block;
-		}
-		.minion {
-			width: 50px;
-			height: 50px;
-			background-image: url('img/minion50.png');
-			display: inline-block;
-		}
+	<title>Minion</title>
+	<link rel="stylesheet" type="text/css" href="map.css">	
 
-		div {
-			line-height: 0px;
-		}
-		.button {
-			background-color: #4CAF50;
-    		border: none;
-    		color: white;
-    		padding: 15px 32px;
-    		text-align: center;
-    		text-decoration: none;
-    		display: inline-block;
-    		font-size: 16px;
-    		margin: 4px 2px;
-    		cursor: pointer;
-		}
-		/* End of CSS */
-	</style>
 </head>
 <body>
 	<!-- All of our HTML code goes here... -->
 	<title>minion Game</title>
 	<div align="center" id='world'></div>
-	<div align="left" id='timer'></div>
-	<div align="right">
-		<button id="nextMap" onclick="nextGame()">Next</button>
-	</div>
+	<div align="left" id='timer' class="timer"></div>
+
+	<button id="nextMap" onclick="nextGame()" class="button">Next</button>
 	<script src="minion.js"></script>
 	<!-- End of HTML-->
 </body>
