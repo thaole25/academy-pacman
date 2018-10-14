@@ -4,11 +4,11 @@
 // 2 => <div class='coin'></div>
 // 3 => <div class='ground'></div>
 // 4 => <div class='ghost'></div>
-// 5 => <div class='pacman'></div>
+// 5 => <div class='minion'></div>
 // map = [ 1, 2, 3 ]
 // map = [ [1,2,3], [1,2,3], [1,2,3] ];
 
-pacman = {
+minion = {
 	x: 6,
 	y: 10
 }
@@ -47,7 +47,7 @@ function drawWorld(){
 				el.innerHTML += "<div class='banana'></div>";
 			}
 			else if (map[y][x] === 5) {
-				el.innerHTML += "<div class='pacman'></div>";
+				el.innerHTML += "<div class='minion'></div>";
 			}
 		}
 		el.innerHTML += "<br>";
@@ -58,34 +58,34 @@ drawWorld();
 
 document.onkeydown = function(event){
 	// console.log(event);
-	if (event.keyCode === 37){ // PACMAN MOVE LEFT
-		if ( map[pacman.y][pacman.x-1] !== 1){
-			map[pacman.y][pacman.x] = 3;
-			pacman.x = pacman.x - 1;
-			map[pacman.y][pacman.x] = 5;
+	if (event.keyCode === 37){ // minion MOVE LEFT
+		if ( map[minion.y][minion.x-1] !== 1){
+			map[minion.y][minion.x] = 3;
+			minion.x = minion.x - 1;
+			map[minion.y][minion.x] = 5;
 			drawWorld();
 		}
-	}else if (event.keyCode === 38){ // PACMAN MOVE UP
-		if ( map[pacman.y-1][pacman.x] !== 1){
-			map[pacman.y][pacman.x] = 3;
-			pacman.y = pacman.y - 1;
-			map[pacman.y][pacman.x] = 5;
-			drawWorld();
-		}
-	}
-	else if (event.keyCode === 39){ // PACMAN MOVE RIGHT
-		if ( map[pacman.y][pacman.x+1] !== 1){
-			map[pacman.y][pacman.x] = 3;
-			pacman.x = pacman.x + 1;
-			map[pacman.y][pacman.x] = 5;
+	}else if (event.keyCode === 38){ // minion MOVE UP
+		if ( map[minion.y-1][minion.x] !== 1){
+			map[minion.y][minion.x] = 3;
+			minion.y = minion.y - 1;
+			map[minion.y][minion.x] = 5;
 			drawWorld();
 		}
 	}
-	else if (event.keyCode === 40){ // PACMAN MOVE DOWN
-		if ( map[pacman.y+1][pacman.x] !== 1){
-			map[pacman.y][pacman.x] = 3;
-			pacman.y = pacman.y + 1;
-			map[pacman.y][pacman.x] = 5;
+	else if (event.keyCode === 39){ // minion MOVE RIGHT
+		if ( map[minion.y][minion.x+1] !== 1){
+			map[minion.y][minion.x] = 3;
+			minion.x = minion.x + 1;
+			map[minion.y][minion.x] = 5;
+			drawWorld();
+		}
+	}
+	else if (event.keyCode === 40){ // minion MOVE DOWN
+		if ( map[minion.y+1][minion.x] !== 1){
+			map[minion.y][minion.x] = 3;
+			minion.y = minion.y + 1;
+			map[minion.y][minion.x] = 5;
 			drawWorld();
 		}
 	}
