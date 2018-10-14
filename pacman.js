@@ -1,12 +1,12 @@
-	// All of our JavaScript code goes here... 
+// All of our JavaScript code goes here... 
 	
-	// 1 => <div class='wall'></div>
-	// 2 => <div class='coin'></div>
-	// 3 => <div class='ground'></div>
-	// 4 => <div class='ghost'></div>
-	// 5 => <div class='pacman'></div>
-	// map = [ 1, 2, 3 ]
-	// map = [ [1,2,3], [1,2,3], [1,2,3] ];
+// 1 => <div class='wall'></div>
+// 2 => <div class='coin'></div>
+// 3 => <div class='ground'></div>
+// 4 => <div class='ghost'></div>
+// 5 => <div class='pacman'></div>
+// map = [ 1, 2, 3 ]
+// map = [ [1,2,3], [1,2,3], [1,2,3] ];
 
 pacman = {
 	x: 6,
@@ -25,7 +25,7 @@ map = [
 	[1,1,1,1,1,1,1,1,1,1,1,1,1], 
 ]
 
-var el = document.getElementById('world');
+let el = document.getElementById('world');
 
 function drawWorld(){
 	el.innerHTML = '';
