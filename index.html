@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>PacMan</title>	
+	<title>Minion</title>	
 	<style>
-		/* All of our CSS code goes here... */
-		* { 
-			/*outline: 1px dotted purple; */
-		}
 		.wall {
 			width: 50px;
 			height: 50px;
-			background-image: url('wall.png');
+			background-image: url('img/wall50.png');
 			display: inline-block;
 		}
 		.coin {
 			width: 50px;
 			height: 50px;
-			background-image: url('coin.png');
+			background-image: url('img/coin50.png');
+			display: inline-block;
+		}
+		.banana {
+			width: 50px;
+			height: 50px;
+			background-image: url('img/banana50.png');
 			display: inline-block;
 		}
 		.ground {
 			width: 50px;
 			height: 50px;
-			background-image: url('bg1.png');
-			display: inline-block;
-		}
-		.ghost {
-			width: 50px;
-			height: 50px;
-			background-image: url('ghost1.png');
+			background-image: url('img/bg50.png');
 			display: inline-block;
 		}
 		.pacman {
 			width: 50px;
 			height: 50px;
-			background-image: url('pacman.png');
+			background-image: url('img/minion50.png');
 			display: inline-block;
 		}
 
 		div {
 			line-height: 0px;
+		}
+		.button {
+			background-color: #4CAF50;
+    		border: none;
+    		color: white;
+    		padding: 15px 32px;
+    		text-align: center;
+    		text-decoration: none;
+    		display: inline-block;
+    		font-size: 16px;
+    		margin: 4px 2px;
+    		cursor: pointer;
 		}
 		/* End of CSS */
 	</style>
@@ -47,8 +55,11 @@
 <body>
 	<!-- All of our HTML code goes here... -->
 	<title>Pacman Game</title>
-	<div style="width:800px; margin:0 auto;" id='world'></div>
-	<div id='timer'></div>
+	<div align="center" id='world'></div>
+	<div align="left" id='timer'></div>
+	<div align="right">
+		<button id="nextMap" onclick="nextGame()">Next</button>
+	</div>
 	<script src="pacman.js"></script>
 	<!-- End of HTML-->
 </body>
