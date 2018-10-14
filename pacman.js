@@ -88,3 +88,15 @@ document.onkeydown = function(event){
 	}
 	console.log(map)
 }
+
+let timer = document.getElementById('timer');
+function countDown(seconds){
+	timer.innerHTML = "Count down: " + seconds;
+	seconds --;
+	let timeout = setTimeout('countDown('+seconds+')',1000);
+	if (seconds < 0){
+		clearTimeout(timeout);
+		timer.innerHTML = "Time out!";
+	}
+}
+countDown(5);
