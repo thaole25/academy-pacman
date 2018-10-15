@@ -6,56 +6,7 @@
 // 4 => <div class='banana'></div>
 // 5 => <div class='minion'></div>
 
-const map1 = [ 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-    [1,3,4,3,3,3,2,3,3,3,2,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,1,3,3,3,3,1],  
-    [1,3,3,3,3,3,5,3,3,3,3,1], 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-];
-
-const map2 = [ 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-    [1,3,3,3,3,3,4,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,5,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,2,3,3,3,3,3,3,3,2,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-];
-
-const design1 = {
-	map: map1,
-	minion: {x: 6, y: 10},
-	goal: {x: 2, y: 1}
-}
-
-const design2 = {
-	map: map2,
-	minion: {x: 6, y: 5},
-	goal: {x: 6, y: 1}
-}
-
-let el = document.getElementById('world');
-let design = design2
-
-let map = design.map;
-let minion = design.minion;
-let goal = design.goal;
-
-function drawWorld(){
+function drawWorld(map){
 	el.innerHTML = '';
 	for(var y = 0; y < map.length ; y = y + 1) {
 		for(var x = 0; x < map[y].length ; x = x + 1) {		
@@ -79,15 +30,14 @@ function drawWorld(){
 	}
 }
 
-drawWorld();
-
 let timer = document.getElementById('timer');
 let timeout;
 
 function done(){
 	clearTimeout(timeout);
 	timer.innerHTML = "DONE!";
-	document.onkeydown = null;
+	//document.onkeydown = null;
+	document.removeEventListener("keydown", pressKey);
 }
 
 function countDown(seconds){
@@ -98,23 +48,21 @@ function countDown(seconds){
 		done();
 	}
 }
-countDown(30);
 
-document.onkeydown = function(event){
-	// console.log(event);
+function pressKey(event){
 	if (event.keyCode === 37){ // minion MOVE LEFT
 		if ( map[minion.y][minion.x-1] !== 1){
 			map[minion.y][minion.x] = 3;
 			minion.x = minion.x - 1;
 			map[minion.y][minion.x] = 5;
-			drawWorld();
+			drawWorld(map);
 		}
 	}else if (event.keyCode === 38){ // minion MOVE UP
 		if ( map[minion.y-1][minion.x] !== 1){
 			map[minion.y][minion.x] = 3;
 			minion.y = minion.y - 1;
 			map[minion.y][minion.x] = 5;
-			drawWorld();
+			drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 39){ // minion MOVE RIGHT
@@ -122,7 +70,7 @@ document.onkeydown = function(event){
 			map[minion.y][minion.x] = 3;
 			minion.x = minion.x + 1;
 			map[minion.y][minion.x] = 5;
-			drawWorld();
+			drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 40){ // minion MOVE DOWN
@@ -130,19 +78,14 @@ document.onkeydown = function(event){
 			map[minion.y][minion.x] = 3;
 			minion.y = minion.y + 1;
 			map[minion.y][minion.x] = 5;
-			drawWorld();
+			drawWorld(map);
 		}
 	}
-	reachGoal();
-	console.log(reachGoal);
-}
+	reachGoal(minion, goal);
+}   
 
-function reachGoal(){
+function reachGoal(minion, goal){
 	if (minion.x == goal.x && minion.y == goal.y){
 		done();
 	}
-}
-
-function nextGame() {
-	location.replace('next.html');
 }
