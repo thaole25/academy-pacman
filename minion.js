@@ -54,6 +54,8 @@ function done(){
 	download(fileName, results);
 	console.log(getTimer);
 	console.log(savePositions);
+	nextButton = document.getElementById("nextMap");
+	nextButton.disabled = false;
 }
 
 function countDown(){

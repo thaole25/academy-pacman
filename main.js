@@ -76,6 +76,8 @@ let fileName = currentMap + ".json";
 
 function nextGame() {
     //done();
+    nextButton = document.getElementById("nextMap");
+    nextButton.disabled = true;
 	if (currentMap == 1){
 		design = design2;
 		currentMap += 1;
@@ -103,4 +105,3 @@ drawWorld(map);
 countDown();
 //countDown(30);
 document.addEventListener("keydown", pressKey);
-
