@@ -72,7 +72,7 @@ let goals = design.goals;
 let currentMap = 1;
 let seconds = MAX_TIME;
 let savePositions = [];
-let fileName = currentMap + ".txt";
+let fileName = currentMap + ".json";
 
 function nextGame() {
     //done();
@@ -91,7 +91,7 @@ function nextGame() {
 	minion = design.minion;
     goals = design.goals;
     savePositions = [];
-    fileName = currentMap + ".txt";
+    fileName = currentMap + ".json";
     drawWorld(map);
     seconds = MAX_TIME;
     countDown();
