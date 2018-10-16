@@ -50,16 +50,34 @@ function countDown(seconds){
 }
 
 function pressKey(event){
+	let numberGoals = goals.length;
+	let i;
 	if (event.keyCode === 37){ // minion MOVE LEFT
 		if ( map[minion.y][minion.x-1] !== 1){
-			map[minion.y][minion.x] = 3;
+			for (i = 0; i < numberGoals; i++){
+				if (minion.y == goals[i].y && minion.x == goals[i].x){
+					map[minion.y][minion.x] = goals[i].img;
+					break;
+				}
+			}
+			if (i == numberGoals){
+				map[minion.y][minion.x] = 3;
+			}
 			minion.x = minion.x - 1;
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
 	}else if (event.keyCode === 38){ // minion MOVE UP
 		if ( map[minion.y-1][minion.x] !== 1){
-			map[minion.y][minion.x] = 3;
+			for (i = 0; i < numberGoals; i++){
+				if (minion.y == goals[i].y && minion.x == goals[i].x){
+					map[minion.y][minion.x] = goals[i].img;
+					break;
+				}
+			}
+			if (i == numberGoals){
+				map[minion.y][minion.x] = 3;
+			}
 			minion.y = minion.y - 1;
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
@@ -67,7 +85,15 @@ function pressKey(event){
 	}
 	else if (event.keyCode === 39){ // minion MOVE RIGHT
 		if ( map[minion.y][minion.x+1] !== 1){
-			map[minion.y][minion.x] = 3;
+			for (i = 0; i < numberGoals; i++){
+				if (minion.y == goals[i].y && minion.x == goals[i].x){
+					map[minion.y][minion.x] = goals[i].img;
+					break;
+				}
+			}
+			if (i == numberGoals){
+				map[minion.y][minion.x] = 3;
+			}
 			minion.x = minion.x + 1;
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
@@ -75,17 +101,25 @@ function pressKey(event){
 	}
 	else if (event.keyCode === 40){ // minion MOVE DOWN
 		if ( map[minion.y+1][minion.x] !== 1){
-			map[minion.y][minion.x] = 3;
+			for (i = 0; i < numberGoals; i++){
+				if (minion.y == goals[i].y && minion.x == goals[i].x){
+					map[minion.y][minion.x] = goals[i].img;
+					break;
+				}
+			}
+			if (i == numberGoals){
+				map[minion.y][minion.x] = 3;
+			}
 			minion.y = minion.y + 1;
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
 	}
-	reachGoal(minion, goal);
+	//reachGoal(minion, goal);
 }   
 
-function reachGoal(minion, goal){
-	if (minion.x == goal.x && minion.y == goal.y){
-		done();
-	}
-}
+// function reachGoal(minion, goal){
+// 	if (minion.x == goal.x && minion.y == goal.y){
+// 		done();
+// 	}
+// }

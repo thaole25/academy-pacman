@@ -46,19 +46,19 @@ const map3 = [
 const design1 = {
 	map: map1,
 	minion: {x: 6, y: 10},
-	goal: {x: 2, y: 1}
+	goals: [{x: 2, y: 1, img: 4}, {x: 6, y: 1, img: 2}, {x: 10, y: 1, img: 2}]
 }
 
 const design2 = {
 	map: map2,
 	minion: {x: 6, y: 10},
-	goal: {x: 2, y: 1}
+	goals: [{x: 2, y: 1, img: 4}, {x: 6, y: 1, img: 2}, {x: 10, y: 1, img: 2}]
 }
 
 const design3 = {
 	map: map3,
 	minion: {x: 6, y: 5},
-	goal: {x: 6, y: 1}
+	goals: [{x: 6, y: 1, img: 4}, {x: 2, y: 9, img: 2}, {x: 10, y: 9, img: 2}]
 }
 
 let el = document.getElementById('world');
@@ -66,7 +66,7 @@ let el = document.getElementById('world');
 let design = design1;
 let map = design.map;
 let minion = design.minion;
-let goal = design.goal;
+let goals = design.goals;
 let currentMap = 0;
 
 function nextGame() {
@@ -84,12 +84,10 @@ function nextGame() {
 	}
 	map = design.map;
 	minion = design.minion;
-	goal = design.goal;
-    //location.reload();
+	goals = design.goals;
     drawWorld(map);
     countDown(30);
     document.addEventListener("keydown", pressKey);
-    //document.onkeydown = pressKey(event);
 }
 
 drawWorld(map);
