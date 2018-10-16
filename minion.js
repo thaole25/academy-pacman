@@ -33,17 +33,33 @@ function drawWorld(map){
 let timer = document.getElementById('timer');
 let timeout;
 
+function download(fileName, exportObj) {
+	// https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportObj)));
+	element.setAttribute('download', fileName);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
+
 function done(){
+	let getTimer = MAX_TIME - seconds - 1;
 	clearTimeout(timeout);
 	timer.innerHTML = "DONE!";
 	//document.onkeydown = null;
 	document.removeEventListener("keydown", pressKey);
+	let results = {time: getTimer, pos: savePositions};
+	download(fileName, results);
+	console.log(getTimer);
+	console.log(savePositions);
 }
 
-function countDown(seconds){
+function countDown(){
 	timer.innerHTML = seconds;
 	seconds --;
-	timeout = setTimeout('countDown('+seconds+')',1000);
+	timeout = setTimeout(countDown,1000);
 	if (seconds < 0){
 		done();
 	}
@@ -64,6 +80,7 @@ function pressKey(event){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x - 1;
+			savePositions.push([minion.x, minion.y]);
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
@@ -79,6 +96,7 @@ function pressKey(event){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y - 1;
+			savePositions.push([minion.x, minion.y]);
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
@@ -95,6 +113,7 @@ function pressKey(event){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x + 1;
+			savePositions.push([minion.x, minion.y]);
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
@@ -111,15 +130,9 @@ function pressKey(event){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y + 1;
+			savePositions.push([minion.x, minion.y]);
 			map[minion.y][minion.x] = 5;
 			drawWorld(map);
 		}
 	}
-	//reachGoal(minion, goal);
 }   
-
-// function reachGoal(minion, goal){
-// 	if (minion.x == goal.x && minion.y == goal.y){
-// 		done();
-// 	}
-// }
