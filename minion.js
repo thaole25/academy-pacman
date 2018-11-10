@@ -56,6 +56,7 @@ const finishButton = document.getElementById('finishBtn');
 const timer = document.getElementById('timer');
 const historyMap = [map1, map2, map3];
 
+let listenerPressKey;
 let timeout;
 let gameIndex = 0;
 let seconds = MAX_TIME;
@@ -71,9 +72,10 @@ function startGame(){
 	let goals = results[0];
 	let minion = results[1];
 	countDown();
-	document.addEventListener("keydown", function(){
+	listenerPressKey = function listener(event){
 		pressKey(map, goals, minion);
-	});
+	}
+	document.addEventListener("keydown", listenerPressKey);
 }
 
 function drawWorld(map){
@@ -192,12 +194,11 @@ function pressKey(map, goals, minion){
 function finish(){
 	const getTimer = MAX_TIME - seconds - 1;
 	clearTimeout(timeout);
-	timer.innerHTML = "Finish";
-	//document.onkeydown = null;
-	document.removeEventListener("keydown", function(){
-		pressKey(map, goals, minion);
-	});
+	timer.innerHTML = '';
+	document.removeEventListener("keydown", listenerPressKey);
 	let results = {time: getTimer, pos: savePositions};
+	finishButton.style.display = 'none';
+	nextButton.style.display = 'inline-block';
 	//download(fileName, results);
 }
 
