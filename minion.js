@@ -49,25 +49,25 @@ const map3 = [
     [1,1,1,1,1,1,1,1,1,1,1,1], 
 ];
 
-const MAX_TIME = 3;
+const MAX_TIME = 20;
 const el = document.getElementById('world');
 const nextButton = document.getElementById('nextBtn');
 const finishButton = document.getElementById('finishBtn');
 const timer = document.getElementById('timer');
 const historyMap = [map1, map2, map3];
+const participant = "Thao";
 
 let listenerPressKey;
 let timeout;
 let gameIndex = 0;
 let seconds = MAX_TIME;
-let savePositions = [];
+let saveData = []; //uct timestamp - posX - posY - game index - participant
 //let fileName = currentMap + ".json";
 
 startGame();
 
 function startGame(){
 	let map = historyMap[gameIndex];
-	gameIndex += 1;
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
@@ -121,6 +121,10 @@ function countDown(){
 function pressKey(map, goals, minion){
 	let numberGoals = goals.length;
 	let i;
+	let now = new Date();
+	let timestamp = now.getUTCFullYear() + "-" + (now.getUTCMonth() + 1) + "-" + now.getUTCDate()
+					+ " " + now.getUTCHours() + ":" + now.getUTCMinutes() + ":" + now.getUTCSeconds() 
+					+ "." + now.getUTCMilliseconds();
 	if (event.keyCode === 37){ // minion MOVE LEFT
 		if (map[minion.y][minion.x-1] !== 1){
 			for (i = 0; i < numberGoals; i++){
@@ -134,9 +138,8 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x - 1;
-			savePositions.push([minion.x, minion.y]);
-			map[minion.y][minion.x] = 5;
-			drawWorld(map);
+			//map[minion.y][minion.x] = 5;
+			//drawWorld(map);
 		}
 	}else if (event.keyCode === 38){ // minion MOVE UP
 		if ( map[minion.y-1][minion.x] !== 1){
@@ -150,9 +153,8 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y - 1;
-			savePositions.push([minion.x, minion.y]);
-			map[minion.y][minion.x] = 5;
-			drawWorld(map);
+			//map[minion.y][minion.x] = 5;
+			//drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 39){ // minion MOVE RIGHT
@@ -167,9 +169,8 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x + 1;
-			savePositions.push([minion.x, minion.y]);
-			map[minion.y][minion.x] = 5;
-			drawWorld(map);
+			//map[minion.y][minion.x] = 5;
+			//drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 40){ // minion MOVE DOWN
@@ -184,22 +185,38 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y + 1;
-			savePositions.push([minion.x, minion.y]);
-			map[minion.y][minion.x] = 5;
-			drawWorld(map);
+			//map[minion.y][minion.x] = 5;
+			//drawWorld(map);
 		}
 	}
+	saveData.push([timestamp, minion.x, minion.y, gameIndex, participant]);
+	map[minion.y][minion.x] = 5;
+	drawWorld(map);
 }
 
 function finish(){
-	const getTimer = MAX_TIME - seconds - 1;
 	clearTimeout(timeout);
 	timer.innerHTML = '';
 	document.removeEventListener("keydown", listenerPressKey);
-	let results = {time: getTimer, pos: savePositions};
 	finishButton.style.display = 'none';
 	nextButton.style.display = 'inline-block';
-	//download(fileName, results);
+	let fileName = participant + "-" + gameIndex + ".csv";
+	saveToCSV(fileName, saveData);
+	gameIndex += 1;
+}
+
+function saveToCSV(fileName, saveData) {
+	let csvContent = "data:text/csv;charset=utf-8,";
+	saveData.forEach(elem => {
+		let row = elem.join(",");
+		csvContent += row + "\r\n";
+	});
+	let link = document.createElement("a");
+	link.setAttribute("href", encodeURI(csvContent));
+	link.setAttribute("download", fileName);
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 }
 
 function nextGame() {
@@ -227,16 +244,5 @@ function nextGame() {
     countDown();
     //countDown(30);
     document.addEventListener("keydown", pressKey);
-}
-
-function download(fileName, exportObj) {
-	// https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
-	var element = document.createElement('a');
-	element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportObj)));
-	element.setAttribute('download', fileName);
-	element.style.display = 'none';
-	document.body.appendChild(element);
-	element.click();
-	document.body.removeChild(element);
 }
 
