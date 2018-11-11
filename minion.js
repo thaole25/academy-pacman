@@ -56,13 +56,12 @@ const finishButton = document.getElementById('finishBtn');
 const timer = document.getElementById('timer');
 const historyMap = [map1, map2, map3];
 const participant = "Thao";
+const totalMaps = historyMap.length;
 
 let listenerPressKey;
 let timeout;
 let gameIndex = 0;
-let seconds = MAX_TIME;
 let saveData = []; //uct timestamp - posX - posY - game index - participant
-//let fileName = currentMap + ".json";
 
 startGame();
 
@@ -71,7 +70,8 @@ function startGame(){
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
-	countDown();
+	let seconds = MAX_TIME;
+	countDown(seconds);
 	listenerPressKey = function listener(event){
 		pressKey(map, goals, minion);
 	}
@@ -109,10 +109,10 @@ function drawWorld(map){
 	return [goals, minion];
 }
 
-function countDown(){
+function countDown(seconds){
 	timer.innerHTML = seconds;
-	seconds --;
-	timeout = setTimeout(countDown, 1000);
+	//seconds --;
+	timeout = setTimeout("countDown("+(seconds-1)+")", 1000);
 	if (seconds < 0){
 		finish();
 	}
@@ -202,7 +202,6 @@ function finish(){
 	nextButton.style.display = 'inline-block';
 	let fileName = participant + "-" + gameIndex + ".csv";
 	saveToCSV(fileName, saveData);
-	gameIndex += 1;
 }
 
 function saveToCSV(fileName, saveData) {
@@ -220,29 +219,16 @@ function saveToCSV(fileName, saveData) {
 }
 
 function nextGame() {
-    //done();
-    nextButton = document.getElementById("nextMap");
-    nextButton.disabled = true;
-	if (currentMap == 1){
-		design = design2;
-		currentMap += 1;
-	}else if (currentMap == 2){
-		design = design3;
-		currentMap += 1;
+	gameIndex += 1;
+	if (gameIndex == totalMaps){
+		alert('No more maps');
+		nextButton.style.display = 'none';
 	}else{
-        alert("No more maps! Back to the first map");
-        design = design1;
-        currentMap = 1;
+		saveData = [];
+		nextButton.style.display = 'none';
+		finishButton.style.display = 'inline-block';
+		// Change to next map 
+		startGame();
 	}
-	map = design.map;
-	minion = design.minion;
-    goals = design.goals;
-    savePositions = [];
-    fileName = currentMap + ".json";
-    drawWorld(map);
-    seconds = MAX_TIME;
-    countDown();
-    //countDown(30);
-    document.addEventListener("keydown", pressKey);
 }
 
