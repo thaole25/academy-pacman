@@ -16,7 +16,8 @@ let participant;
 let listenerPressKey;
 let timeout;
 let gameIndex = 1;
-let saveData = []; //uct timestamp - posX - posY - game index - participant
+let saveData = []; //uct timestamp - posX - posY - game index - condition - participant 
+let condition;
 
 //TODO: Save game condition
 
@@ -24,6 +25,7 @@ function startGame(){
 	document.getElementById('startScreen').style.display = 'none';
 	document.getElementById('gameCanvas').style.display = 'inline';
 	participant = document.getElementById('inputName').value;
+	condition = document.getElementById('condition').value;
 	let map = historyMap[gameIndex - 1];
 	results = drawWorld(map);
 	let goals = results[0];
@@ -147,7 +149,7 @@ function pressKey(map, goals, minion){
 			//drawWorld(map);
 		}
 	}
-	saveData.push([timestamp, minion.x, minion.y, gameIndex, participant]);
+	saveData.push([timestamp, minion.x, minion.y, gameIndex, condition, participant]);
 	map[minion.y][minion.x] = 5;
 	drawWorld(map);
 }
@@ -158,7 +160,7 @@ function finish(){
 	document.removeEventListener("keydown", listenerPressKey);
 	finishButton.style.display = 'none';
 	nextButton.style.display = 'inline-block';
-	let fileName = participant + "-" + gameIndex + ".csv";
+	let fileName = participant + "-" + gameIndex + "-" + condition + ".csv";
 	saveToCSV(fileName, saveData);
 }
 
