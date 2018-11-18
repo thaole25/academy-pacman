@@ -4,69 +4,27 @@
 // 4 => <div class='banana'></div>
 // 5 => <div class='minion'></div>
 
-const map1 = [ 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-    [1,3,4,3,3,3,2,3,3,3,2,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,1,3,3,3,3,1],  
-    [1,3,3,3,3,3,5,3,3,3,3,1], 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-];
-
-const map2 = [ 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-    [1,3,4,3,3,3,2,3,3,3,2,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,5,3,3,3,3,1], 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-];
-
-const map3 = [ 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-    [1,3,3,3,3,3,4,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,5,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1],  
-    [1,3,2,3,3,3,3,3,3,3,2,1],  
-    [1,3,3,3,3,3,3,3,3,3,3,1], 
-    [1,1,1,1,1,1,1,1,1,1,1,1], 
-];
-
-const MAX_TIME = 20;
+const MAX_TIME = 30;
 const el = document.getElementById('world');
 const nextButton = document.getElementById('nextBtn');
 const finishButton = document.getElementById('finishBtn');
 const timer = document.getElementById('timer');
 const historyMap = [map1, map2, map3];
-const participant = "Thao";
 const totalMaps = historyMap.length;
 
+let participant;
 let listenerPressKey;
 let timeout;
-let gameIndex = 0;
+let gameIndex = 1;
 let saveData = []; //uct timestamp - posX - posY - game index - participant
 
-startGame();
+//TODO: Save game condition
 
 function startGame(){
-	let map = historyMap[gameIndex];
+	document.getElementById('startScreen').style.display = 'none';
+	document.getElementById('gameCanvas').style.display = 'inline';
+	participant = document.getElementById('inputName').value;
+	let map = historyMap[gameIndex - 1];
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
@@ -220,7 +178,7 @@ function saveToCSV(fileName, saveData) {
 
 function nextGame() {
 	gameIndex += 1;
-	if (gameIndex == totalMaps){
+	if (gameIndex > totalMaps){
 		alert('No more maps');
 		nextButton.style.display = 'none';
 	}else{

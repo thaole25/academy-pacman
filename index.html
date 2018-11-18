@@ -8,11 +8,18 @@
 <body>
 	<!-- All of our HTML code goes here... -->
 	<title>Navigation Game</title>
-	<div id="world"></div>
-	<div id="timer" class="timer"></div>
-
-	<button id="nextBtn" onclick="nextGame()">Next</button>
-	<button id="finishBtn" onclick="finish()">Finish</button>
+	<div id="startScreen">
+		<h1>Minion Game</h1>
+		<input id="inputName" type="text" value="Name" /> <br> <br>
+		<button id="startBtn" onclick="startGame()">Start</button>
+	</div>
+	<div id="gameCanvas"> 
+		<div id="world"></div>
+		<div id="timer" class="timer"></div>
+		<button id="nextBtn" onclick="nextGame()">Next</button>
+		<button id="finishBtn" onclick="finish()">Finish</button>
+	</div>
+	<script src="maps.js"></script>
 	<script src="minion.js"></script>
 </body>
 </html>

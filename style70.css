@@ -33,6 +33,16 @@ div {
     line-height: 0px;
 }
 
+#gameCanvas {
+    display: none;
+    text-align: center;
+}
+
+#startScreen{
+    text-align: center;
+    font-size: 50px;
+}
+
 #world {
     text-align: center;
 }
@@ -42,6 +52,13 @@ div {
     position: absolute;
     top: 40px;
     right: 70px;
+}
+
+#startBtn {
+    text-align: center;
+    display: 'inline-block';
+    font-size: 36px;
+    cursor: pointer;
 }
 
 #nextBtn {
@@ -62,4 +79,8 @@ div {
     position: absolute;
     top: 100px;
     right: 70px;
+}
+
+#inputName{
+    font-size: 30px;
 }
