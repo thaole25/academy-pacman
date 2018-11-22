@@ -6,10 +6,14 @@
 
 const MAX_TIME = 30;
 const el = document.getElementById('world');
+const startBtn = document.getElementById('startBtn');
 const nextButton = document.getElementById('nextBtn');
 const finishButton = document.getElementById('finishBtn');
 const timer = document.getElementById('timer');
-const historyMap = [map1, map2, map3, map4, map5, map6, map7, map8, map9];
+const task = document.getElementById('task');
+const tuteDiv = document.getElementById('tutorial');
+const gameCanvas = document.getElementById('gameCanvas');
+const historyMap = [map0, map1, map2, map3, map4, map5, map6, map7, map8, map9];
 const totalMaps = historyMap.length;
 
 let participant;
@@ -18,20 +22,80 @@ let timeout;
 let gameIndex = 1;
 let saveData = []; //uct timestamp - posX - posY - game index - condition - participant 
 let condition;
+let isTute = false;
 
-//TODO: Save game condition
-
-function startGame(){
+function showTask(){
 	document.getElementById('startScreen').style.display = 'none';
-	document.getElementById('gameCanvas').style.display = 'inline';
-	participant = document.getElementById('inputName').value;
 	condition = document.getElementById('condition').value;
-	let map = historyMap[gameIndex - 1];
+	participant = document.getElementById('inputName').value;
+	if (condition == "1"){
+		task.innerHTML += "<p> In this task:" +
+		"<li>Using the up/down/left/right keyboards to move the minion</li>" +
+		"<li>You have 30 seconds to get the banana</li>" +
+		"<li>Click the finish button when you reach the banana</li></p>";
+		task.style.display = 'inline';
+	}else if (condition == "2"){
+		task.innerHTML += "<p> In this task:" +
+		"<li>Using the up/down/left/right keyboards to move the minion</li>" +
+		"<li>You have 30 seconds to get the banana</li>" +
+		"<li>Click the finish button when you reach the banana</li>" + 
+		"<li><b>At the same time, do not give away your destination is the banana. You may try to</li>" +
+			"<ul><li>Get the coins first and then go to the banana (Greedy minion)</li>" +
+			"<li>Go to the banana with an ambiguous path (Drunk minion)</li>" + 
+			"<li>Be creative</li></ul>" + 
+		"</b></p>";
+		task.style.display = 'inline';
+	}else if(condition == "3"){
+		task.innerHTML += "<p> In this task:" +
+		"<li>Using the up/down/left/right keyboards to move the minion</li>" +
+		"<li>You have 30 seconds to get the banana</li>" +
+		"<li>Click the finish button when you reach the banana</li>" + 
+		"<li>At the same time, do not give away your destination is the banana. You may try to" +
+			"<ul><li>Get the coins first and then go to the banana (Greedy minion)</li>" +
+			"<li>Go to the banana with an ambiguous path (Drunk minion)</li>" + 
+			"<li>Be creative</li></ul>" + 
+		"<li><b>Someone is watching your eyes so they know that your destination is the banana." +
+		" Your task is to mislead the observer by changing your eye movements. You may try to</li> " +
+			"<ul><li>Avoid looking to the banana</li>" +
+			"<li>Be creative</li></ul></b></p>";
+		task.style.display = 'inline';
+	}
+}
+
+function tutorial(){
+	isTute = true;
+	task.style.display = 'none';
+	tuteDiv.style.display = 'inline';
+	gameCanvas.style.display = 'inline';
+	let map = historyMap[0]; 
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
 	let seconds = MAX_TIME;
 	countDown(seconds);
+	listenerPressKey = function listener(event){
+		pressKey(map, goals, minion);
+	}
+	document.addEventListener("keydown", listenerPressKey);
+}
+
+function startGame(){
+	isTute = false;
+	finishButton.style.display = 'inline-block';
+	tuteDiv.style.display = 'none';
+	gameCanvas.style.display = 'inline'; 
+	let map = historyMap[gameIndex];
+	results = drawWorld(map);
+	let goals = results[0];
+	let minion = results[1];
+	let seconds = MAX_TIME;
+	countDown(seconds);
+	let now = new Date();
+	let timestamp = now.getUTCFullYear() + "-" + (now.getUTCMonth() + 1) + "-" + now.getUTCDate()
+				+ " " + now.getUTCHours() + ":" + now.getUTCMinutes() + ":" + now.getUTCSeconds() 
+				+ "." + now.getUTCMilliseconds();
+	saveData = [];
+	saveData.push([timestamp, minion.x, minion.y, gameIndex, condition, participant]);
 	listenerPressKey = function listener(event){
 		pressKey(map, goals, minion);
 	}
@@ -159,9 +223,13 @@ function finish(){
 	timer.innerHTML = '';
 	document.removeEventListener("keydown", listenerPressKey);
 	finishButton.style.display = 'none';
-	nextButton.style.display = 'inline-block';
-	let fileName = participant + "-" + gameIndex + "-" + condition + ".csv";
-	saveToCSV(fileName, saveData);
+	if (isTute){
+		startBtn.style.display = 'inline-block';
+	}else{
+		nextButton.style.display = 'inline-block';
+		let fileName = participant + "-" + gameIndex + "-" + condition + ".csv";
+		saveToCSV(fileName, saveData);
+	}
 }
 
 function saveToCSV(fileName, saveData) {
@@ -180,13 +248,11 @@ function saveToCSV(fileName, saveData) {
 
 function nextGame() {
 	gameIndex += 1;
-	if (gameIndex > totalMaps){
+	if (gameIndex >= totalMaps){
 		alert('No more maps');
 		nextButton.style.display = 'none';
 	}else{
-		saveData = [];
 		nextButton.style.display = 'none';
-		finishButton.style.display = 'inline-block';
 		// Change to next map 
 		startGame();
 	}

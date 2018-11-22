@@ -6,13 +6,17 @@
 
 </head>
 <body>
-	<!-- All of our HTML code goes here... -->
-	<title>Navigation Game</title>
 	<div id="startScreen">
 		<h1>Minion Game</h1>
 		<input class="inputTxt" id="inputName" type="text" value="Name" />
 		<input class="inputTxt" id="condition" type="text" value="Condition" /> <br> <br>
-		<button id="startBtn" onclick="startGame()">Start</button>
+		<button id="showTaskBtn" class="btn" onclick="showTask()">Start</button>
+	</div>
+	<div id="task">
+		<button id="tuteBtn" class="btn" onclick="tutorial()">Start Tutorial</button>
+	</div>
+	<div id="tutorial">
+		<button id="startBtn" onclick="startGame()">Start Game</button>
 	</div>
 	<div id="gameCanvas"> 
 		<div id="world"></div>
