@@ -71,7 +71,7 @@ function tutorial(){
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
-	let seconds = MAX_TIME;
+	let seconds = MAX_TIME * 4;
 	countDown(seconds);
 	listenerPressKey = function listener(event){
 		pressKey(map, goals, minion);
