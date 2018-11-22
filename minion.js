@@ -39,10 +39,10 @@ function showTask(){
 		"<li>Using the up/down/left/right keyboards to move the minion</li>" +
 		"<li>You have 30 seconds to get the banana</li>" +
 		"<li>Click the finish button when you reach the banana</li>" + 
-		"<li><b>At the same time, do not give away your destination is the banana. You may try to</li>" +
-			"<ul><li>Get the coins first and then go to the banana (Greedy minion)</li>" +
-			"<li>Go to the banana with an ambiguous path (Drunk minion)</li>" + 
-			"<li>Be creative</li></ul>" + 
+		"<li><b>At the same time, do not give away your destination is the banana. You may</li>" +
+			"<ul><li>Be a greedy minion and use the coins as decoys. You may collect the coin first and then go to the banana</li>" +
+			"<li>Go to the banana with an ambiguous path (Be creative)</li>" +
+			"<li>Please notice that you can collect the banana and coins multiple times</li></ul>" + 
 		"</b></p>";
 		task.style.display = 'inline';
 	}else if(condition == "3"){
@@ -50,13 +50,13 @@ function showTask(){
 		"<li>Using the up/down/left/right keyboards to move the minion</li>" +
 		"<li>You have 30 seconds to get the banana</li>" +
 		"<li>Click the finish button when you reach the banana</li>" + 
-		"<li>At the same time, do not give away your destination is the banana. You may try to" +
-			"<ul><li>Get the coins first and then go to the banana (Greedy minion)</li>" +
-			"<li>Go to the banana with an ambiguous path (Drunk minion)</li>" + 
-			"<li>Be creative</li></ul>" + 
-		"<li><b>Someone is watching your eyes so they know that your destination is the banana." +
+		"<li>At the same time, do not give away your destination is the banana. You may</li>" +
+			"<ul><li>Be a greedy minion and use the coins as decoys. You may collect the coin first and then go to the banana</li>" +
+			"<li>Go to the banana with an ambiguous path (Be creative)</li>" + 
+			"<li>Please notice that you can collect the banana and coins multiple times</li></ul>" + 
+		"<li><b>Someone is watching your gaze so he/she knows that you will be looking at the banana, which is your real destination." +
 		" Your task is to mislead the observer by changing your eye movements. You may try to</li> " +
-			"<ul><li>Avoid looking to the banana</li>" +
+			"<ul><li>Avoid looking at the banana</li>" +
 			"<li>Be creative</li></ul></b></p>";
 		task.style.display = 'inline';
 	}
@@ -71,8 +71,8 @@ function tutorial(){
 	results = drawWorld(map);
 	let goals = results[0];
 	let minion = results[1];
-	let seconds = MAX_TIME * 4;
-	countDown(seconds);
+	// let seconds = MAX_TIME * 4;
+	// countDown(seconds);
 	listenerPressKey = function listener(event){
 		pressKey(map, goals, minion);
 	}
