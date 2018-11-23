@@ -162,8 +162,6 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x - 1;
-			//map[minion.y][minion.x] = 5;
-			//drawWorld(map);
 		}
 	}else if (event.keyCode === 38){ // minion MOVE UP
 		if ( map[minion.y-1][minion.x] !== 1){
@@ -177,8 +175,6 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y - 1;
-			//map[minion.y][minion.x] = 5;
-			//drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 39){ // minion MOVE RIGHT
@@ -193,8 +189,6 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.x = minion.x + 1;
-			//map[minion.y][minion.x] = 5;
-			//drawWorld(map);
 		}
 	}
 	else if (event.keyCode === 40){ // minion MOVE DOWN
@@ -209,8 +203,6 @@ function pressKey(map, goals, minion){
 				map[minion.y][minion.x] = 3;
 			}
 			minion.y = minion.y + 1;
-			//map[minion.y][minion.x] = 5;
-			//drawWorld(map);
 		}
 	}
 	saveData.push([timestamp, minion.x, minion.y, gameIndex, condition, participant]);
@@ -234,16 +226,26 @@ function finish(){
 
 function saveToCSV(fileName, saveData) {
 	let csvContent = "data:text/csv;charset=utf-8,";
-	saveData.forEach(elem => {
-		let row = elem.join(",");
+	// saveData.forEach(elem => {
+	// 	let row = elem.join(",");
+	// 	csvContent += row + "\r\n";
+	// });
+	//let csvContent = "";
+	for (let i = 0; i < saveData.length; i++){
+		let row = saveData[i].join(",");
 		csvContent += row + "\r\n";
-	});
-	let link = document.createElement("a");
-	link.setAttribute("href", encodeURI(csvContent));
-	link.setAttribute("download", fileName);
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	}
+	let blobObj = new Blob([csvContent]); //, { type: 'text/csv;charset=utf-8;' });
+	if (window.navigator.msSaveBlob){
+		window.navigator.msSaveBlob(blobObj, fileName);
+	}else{
+		let link = document.createElement("a");
+		link.setAttribute("href", encodeURI(csvContent));
+		link.setAttribute("download", fileName);
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
 }
 
 function nextGame() {
