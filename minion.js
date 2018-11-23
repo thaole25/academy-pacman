@@ -225,20 +225,21 @@ function finish(){
 }
 
 function saveToCSV(fileName, saveData) {
-	let csvContent = "data:text/csv;charset=utf-8,";
+	//let csvContent = "data:text/csv;charset=utf-8,";
 	// saveData.forEach(elem => {
 	// 	let row = elem.join(",");
 	// 	csvContent += row + "\r\n";
 	// });
-	//let csvContent = "";
+	let csvContent = "";
 	for (let i = 0; i < saveData.length; i++){
 		let row = saveData[i].join(",");
 		csvContent += row + "\r\n";
 	}
-	let blobObj = new Blob([csvContent]); //, { type: 'text/csv;charset=utf-8;' });
+	let blobObj = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
 	if (window.navigator.msSaveBlob){
 		window.navigator.msSaveBlob(blobObj, fileName);
 	}else{
+		csvContent = "data:text/csv;charset=utf-8," + csvContent;
 		let link = document.createElement("a");
 		link.setAttribute("href", encodeURI(csvContent));
 		link.setAttribute("download", fileName);
