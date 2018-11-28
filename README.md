@@ -1,6 +1,6 @@
 # minion
 
-Navigation game: https://thaole25.github.io/minion/
+Navigation game
 
 - Move around the map
 - Record the agent's moves into a csv file (press finish button)
